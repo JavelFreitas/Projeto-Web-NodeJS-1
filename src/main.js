@@ -7,12 +7,12 @@ const app = express();
 
 const saveInFile = async (email) => {
     console.log(email);
-    try {
-        const data = fs.writeFileSync(fileName, email);
-        console.log('salvo');
-    } catch (error) {
-        console.log(error);
-    }
+    fs.appendFile(fileName, email + '\n', err =>{
+        if (err) {
+            console.error(err)
+            return
+        }
+    })
 }
 
 const emailValidation = (req, res) => {
