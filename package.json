@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/JavelFreitas/Projeto-Web-NodeJS-1#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "validate.js": "^0.13.1"
   }
 }
