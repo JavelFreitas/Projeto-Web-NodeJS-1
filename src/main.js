@@ -25,20 +25,21 @@ const saveDogInFile = async (dogURL, fileName) => {
     });
 }
 
-const emailValidation = (req, res) => {
-    const { login } = req.params;
+const emailValidation = (login) => {
+    
     if (!login){
-        res.send(400).send(`message not received`);
-        return;
+        return {status: 400, message: `message not received`};
     }
 
     let validation = validate({this: `${login}`}, constraints);
 
     console.log(login);
     if(!validation){
-        return res.status(200).send(login);
+        return {status: 200, message: login};
     }
-    return res.status(400).send(validation.this);
+    
+    let thism = validation.this;
+    return {status: 400, message: thism};
 }
 
 var constraints = {
@@ -53,17 +54,28 @@ app.get('/', (req, res) => {
 
 app.get('/SalvarLogin/:login', (req, res) => {
     let fileName = 'database/EmailList.txt';
-    const { login } = req.params;
+    let { login } = req.params;
+
+    let {status} = emailValidation(login);
+    
+    if(status != 200){
+        login += ' (Email incorreto)';
+    }
+
     saveInFile(login, fileName);
     res.status(200).send(login);
 });
 
 app.get('/:login', (req, res) => {
-    emailValidation(req, res);
+    const { login } = req.params;
+    let {status, message} = emailValidation(login);
+    res.status(status).send(message);
 });
 
 app.post('/:login', (req, res) => {
-    emailValidation(req, res);
+    const { login } = req.params;
+    let {status, message} = emailValidation(login);
+    res.status(status).send(message);
 });
 
 app.post('/dog/random', async (req, res) => {
