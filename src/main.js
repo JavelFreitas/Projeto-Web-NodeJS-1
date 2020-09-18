@@ -72,8 +72,13 @@ app.get('/:login', (req, res) => {
     res.status(status).send(message);
 });
 
-app.post('/:login', (req, res) => {
-    const { login } = req.params;
+app.post('/', (req, res) => {
+    
+    if(!req.query){
+        res.status(400).send('Query Needed');
+    }
+
+    const { login } = req.query;
     let {status, message} = emailValidation(login);
     res.status(status).send(message);
 });
