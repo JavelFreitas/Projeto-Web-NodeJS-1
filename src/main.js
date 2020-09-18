@@ -7,8 +7,15 @@ const saveInFile = async (email) => {
     console.log(email);
 }
 
-app.get('', (req, res) => {
-    res.status(200).send('ok')
+app.get('', (error, req, body) => {
+    if (error) {
+        console.error(error)
+        return
+    }
+    const { login } = req.params;
+    console.log(body);
+    console.log(req);
+    res.status(200).send(login)
 });
 
 app.get('/SalvarLogin/:login', (req, res) => {
