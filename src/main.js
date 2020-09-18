@@ -1,11 +1,17 @@
 const express = require('express');
 const validate = require('validate.js');
 const fs = require('fs');
+var fileName = `..\database\EmailList.txt`
 
 const app = express();
 
 const saveInFile = async (email) => {
     console.log(email);
+    try {
+        const data = fs.writeFileSync(fileName, email)
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const emailValidation = (req, res) => {
